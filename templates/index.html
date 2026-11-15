@@ -464,12 +464,9 @@
                         the high-dimensional embeddings into a 2D layout. We get the best results with a large global
                         embedding,
                         choose the neighborhood words, and then reduce to 2D for display.</li>
-                    <li><strong>Distance Layout (optional):</strong> Choose "Distance (radial)" in the Layout menu
-                        to put the query word in the centre and each neighbor at its true embedding distance, with
-                        dashed rings marking round distances. It shows exact distances to the query and works best
-                        with few neighbors; t-SNE is better for seeing which neighbors sound like each other.</li>
-                    <li><strong>Interactive Graph:</strong> Renders query words and their nearest acoustic neighbors
-                        using D3.js. Hover over nodes to inspect individual similarity distances.</li>
+                    <li><strong>Two Layouts:</strong> "Clusters (t-SNE)", the default, groups neighbors that sound
+                        like each other. "Distance (radial)" puts the query word in the centre and each neighbor at
+                        its true distance from it; it reads best with few neighbors.</li>
                 </ul>
                 <p
                     style="margin-top: 1.5rem; font-size: 0.85rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.75rem; text-align: center; font-style: italic;">
@@ -480,6 +477,7 @@
                       The source code is available
                     <a href="https://github.com/malcolmslaney/ane-plot" target="_blank"
                         rel="noopener noreferrer">on GitHub</a>.
+                    Hover pronunciation and the radial layout by Xavier Anguera.
                 </p>
             </div>
         </div>
