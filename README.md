@@ -5,7 +5,9 @@ A web application for exploring the phonetic relationships between words using A
 
 - **Acoustic Embeddings**: Utilizes Woojay Jeon's (@Apple) [Acoustic Neighbor Embeddings (ACN)](https://github.com/apple/ml-acn-embed) to map words into a high-dimensional space where similar-sounding words are closer together. There is a setting at the top of the page for the dimensionality of the global embedding.
 - **t-SNE Projection**: Applies [t-Distributed Stochastic Neighbor Embedding (t-SNE)](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding) to reduce the high-dimensional embeddings into a 2D layout. We get the best results with a large global embedding, choose the neighborhood words, and then reduce to 2D for display.
+- **Distance Layout (optional)**: The "Layout" menu switches to a radial view. The query word sits in the centre and each neighbor sits at its true embedding distance from it, so the length of each query link is to scale; dashed rings mark round distances (e.g. 0.2, 0.4, 0.6). Neighbors slide along their ring to avoid overlapping. This view is best with few neighbors: with many, the distances bunch into a narrow band and the clusters that t-SNE shows are lost.
 - **Interactive Graph**: Renders query words and their nearest acoustic neighbors using D3.js. Hover over nodes to inspect individual similarity distances.
+- **Pronunciation**: Hovering over a word reads it aloud with the browser's built-in text-to-speech. Pick the voice from the "Voice" menu; the page picks a good English voice by default and remembers your choice. Browsers only play sound after you click on the page, so until then the speaker button asks for a click. After that it mutes and unmutes pronunciation.
 
 ![Example](ANE_Example_Hello.png)
 
@@ -41,6 +43,7 @@ Download the pretrained acoustic embedding models and the pruned wakeword dictio
 ```bash
 curl -s https://ml-site.cdn-apple.com/models/ml-acn-embed/model.tgz | tar xz
 curl -s https://ml-site.cdn-apple.com/models/ml-acn-embed/wakeword.tgz | tar xz
+curl -s https://raw.githubusercontent.com/Alexir/CMUdict/master/cmudict-0.7b -o cmudict-0.7b
 ```
 
 ### 4. Run the webserver
@@ -48,6 +51,12 @@ Start the Flask application (it runs on port 5001 to avoid conflicts with macOS 
 
 ```bash
 python app.py
+```
+
+The server uses HTTPS by default, which needs the `cryptography` package. For local use, run it over plain HTTP instead:
+
+```bash
+python app.py --nossl --host=127.0.0.1
 ```
 
 Open your browser and navigate to [http://127.0.0.1:5001](http://127.0.0.1:5001) to interact with the graph!
